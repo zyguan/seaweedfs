@@ -17,14 +17,13 @@ import (
 
 var IsDebug *bool
 var server *string
-var port *int
 
 var commands = []*Command{
 	cmdFix,
-	cmdMaster,
 	cmdUpload,
-	cmdVersion,
+	cmdMaster,
 	cmdVolume,
+	cmdVersion,
 }
 
 var exitStatus = 0
@@ -41,7 +40,7 @@ func setExitStatus(n int) {
 func main() {
 	flag.Usage = usage
 	flag.Parse()
-	log.SetFlags(0)
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	args := flag.Args()
 	if len(args) < 1 {
@@ -85,12 +84,6 @@ The commands are:
     {{.Name | printf "%-11s"}} {{.Short}}{{end}}{{end}}
 
 Use "weed help [command]" for more information about a command.
-
-Additional help topics:
-{{range .}}{{if not .Runnable}}
-    {{.Name | printf "%-11s"}} {{.Short}}{{end}}{{end}}
-
-Use "weed help [topic]" for more information about that topic.
 
 `
 

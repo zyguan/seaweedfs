@@ -14,7 +14,6 @@ import (
 func init() {
 	cmdMaster.Run = runMaster // break init cycle
 	IsDebug = cmdMaster.Flag.Bool("debug", false, "enable debug mode")
-	port = cmdMaster.Flag.Int("port", 8080, "http listen port")
 }
 
 var cmdMaster = &Command{
@@ -29,8 +28,10 @@ var cmdMaster = &Command{
 var (
 	metaFolder        = cmdMaster.Flag.String("mdir", "/tmp", "data directory to store mappings")
 	capacity          = cmdMaster.Flag.Int("capacity", 100, "maximum number of volumes to hold")
-	mapper            *directory.Mapper
 	volumeSizeLimitMB = cmdMaster.Flag.Uint("volumeSizeLimitMB", 32*1024, "Default Volume Size in MegaBytes")
+	mport             = cmdMaster.Flag.Int("port", 9333, "http listen port")
+
+	mapper *directory.Mapper
 )
 
 func dirLookupHandler(w http.ResponseWriter, r *http.Request) {
@@ -80,8 +81,8 @@ func runMaster(cmd *Command, args []string) bool {
 	http.HandleFunc("/dir/join", dirJoinHandler)
 	http.HandleFunc("/dir/status", dirStatusHandler)
 
-	log.Println("Start directory service at http://127.0.0.1:" + strconv.Itoa(*port))
-	e := http.ListenAndServe(":"+strconv.Itoa(*port), nil)
+	log.Println("Start directory service at http://127.0.0.1:" + strconv.Itoa(*mport))
+	e := http.ListenAndServe(":"+strconv.Itoa(*mport), nil)
 	if e != nil {
 		log.Fatal("Fail to start:", e)
 	}
