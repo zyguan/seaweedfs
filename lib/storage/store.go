@@ -7,7 +7,8 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-	"pkg/util"
+
+	"github.com/zyguan/seaweedfs/lib/util"
 )
 
 type Store struct {

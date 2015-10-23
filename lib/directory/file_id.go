@@ -3,10 +3,11 @@ package directory
 import (
 	"encoding/hex"
 	"log"
-	"pkg/storage"
 	"strconv"
 	"strings"
-	"pkg/util"
+
+	"github.com/zyguan/seaweedfs/lib/storage"
+	"github.com/zyguan/seaweedfs/lib/util"
 )
 
 type FileId struct {
@@ -18,7 +19,7 @@ type FileId struct {
 func NewFileId(VolumeId uint32, Key uint64, Hashcode uint32) *FileId {
 	return &FileId{VolumeId: VolumeId, Key: Key, Hashcode: Hashcode}
 }
-func ParseFileId(fid string) *FileId{
+func ParseFileId(fid string) *FileId {
 	a := strings.Split(fid, ",")
 	if len(a) != 2 {
 		log.Println("Invalid fid", fid, ", split length", len(a))

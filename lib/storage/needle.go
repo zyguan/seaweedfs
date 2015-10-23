@@ -8,9 +8,10 @@ import (
 	"mime"
 	"net/http"
 	"os"
-	"pkg/util"
 	"strconv"
 	"strings"
+
+	"github.com/zyguan/seaweedfs/lib/util"
 )
 
 type Needle struct {
